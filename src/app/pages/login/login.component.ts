@@ -18,10 +18,7 @@ export class LoginComponent {
 
   onLogin() {
     this.authService.login(this.user, this.password).subscribe(
-      response => {
-        localStorage.setItem('authToken', response.token);  // Salve o token, se necessário
-        this.router.navigate(['/clients']);
-      },
+      response => this.router.navigate(['/clients']),
       error => console.error('Erro ao logar:', error)
     );
   }
