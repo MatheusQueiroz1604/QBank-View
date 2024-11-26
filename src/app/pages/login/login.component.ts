@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   standalone: true,
-  imports: [HttpClientModule, FormsModule],
+  imports: [FormsModule],
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
@@ -19,7 +18,10 @@ export class LoginComponent {
 
   onLogin() {
     this.authService.login(this.user, this.password).subscribe(
-      response => this.router.navigate(['/clients']),
+      response => {
+        this.authService.saveToken(response.token);
+        this.router.navigate(['/clients'])
+      },
       error => console.error('Erro ao logar:', error)
     );
   }

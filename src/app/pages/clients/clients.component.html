@@ -1,10 +1,93 @@
 <div class="clients-container">
-  <h2>Clientes</h2>
+  <h2>Adicionar Usuário</h2>
+  <form (ngSubmit)="createUser()" #userForm="ngForm">
+    <div>
+      <label for="userId">ID do Usuário:</label>
+      <input
+        type="number"
+        id="userId"
+        [(ngModel)]="newUser.userId"
+        name="userId"
+        required
+      />
+    </div>
+    <div>
+      <label for="name">Nome:</label>
+      <input
+        type="text"
+        id="name"
+        [(ngModel)]="newUser.name"
+        name="name"
+        required
+      />
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="newUser.email"
+        name="email"
+        required
+      />
+    </div>
+    <div>
+      <label for="password">Senha:</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="newUser.password"
+        name="password"
+        required
+      />
+    </div>
+    <div>
+      <label for="cpf">CPF:</label>
+      <input
+        type="text"
+        id="cpf"
+        [(ngModel)]="newUser.cpf"
+        name="cpf"
+        required
+      />
+    </div>
+    <div>
+      <label for="birthDate">Data de Nascimento:</label>
+      <input
+        type="date"
+        id="birthDate"
+        [(ngModel)]="newUser.birthDate"
+        name="birthDate"
+        required
+      />
+    </div>
+    <div>
+      <label for="phone">Telefone:</label>
+      <input
+        type="text"
+        id="phone"
+        [(ngModel)]="newUser.phone"
+        name="phone"
+        required
+      />
+    </div>
+    <button type="submit" [disabled]="userForm.invalid">Adicionar Usuário</button>
+  </form>
+
+  <h2>Users Ativos</h2>
   <ul>
     <li *ngFor="let client of clients">
-      {{ client.name }} - {{ client.email }}
-      <button (click)="updateClient(client)">Editar</button>
-      <button (click)="deleteClient(client.id)">Excluir</button>
+      <div *ngIf="editClientId !== client.userId; else editForm">
+        {{ client.name }} - {{ client.email }}
+        <button (click)="startEdit(client)">Editar</button>
+        <button (click)="deleteClient(client.userId)">Excluir</button>
+      </div>
+      <ng-template #editForm>
+        <input [(ngModel)]="client.name" placeholder="Nome" />
+        <input [(ngModel)]="client.email" placeholder="Email" />
+        <button (click)="saveEdit(client)">Salvar</button>
+        <button (click)="cancelEdit()">Cancelar</button>
+      </ng-template>
     </li>
   </ul>
 </div>

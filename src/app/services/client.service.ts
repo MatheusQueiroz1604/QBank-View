@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,19 +10,33 @@ export class ClientService {
 
   constructor(private http: HttpClient) {}
 
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('authToken'); // Recupera o token do localStorage
+    if (!token) {
+      throw new Error('Token de autenticação não encontrado'); // Ou algum tipo de alerta/erro
+    }
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
   getClients(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/users`);
+    return this.http.get(`${this.apiUrl}/users`, { headers: this.getAuthHeaders() });
   }
 
   addClient(client: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users`, client);
+    return this.http.post(`${this.apiUrl}/users`, client, { headers: this.getAuthHeaders() });
   }
 
   updateClient(client: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/${client.id}`, client);
+    const headers = this.getAuthHeaders();
+
+    return this.http.put(`${this.apiUrl}/users/${client.userId}`, client, { headers });
   }
 
-  deleteClient(clientId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/users/${clientId}`);
+  deleteClient(clientId: number): Observable<any> {
+    const headers = this.getAuthHeaders();
+
+    return this.http.delete(`${this.apiUrl}/users/${clientId}`, { headers });
   }
 }
