@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://qbankapi-exa7gtbachcrh5d8.canadacentral-01.azurewebsites.net';
+  private apiUrl = 'http://localhost:5083';
 
   constructor(private http: HttpClient) {}
 
