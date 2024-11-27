@@ -11,9 +11,9 @@ export class ClientService {
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken'); // Recupera o token do localStorage
+    const token = localStorage.getItem('authToken');
     if (!token) {
-      throw new Error('Token de autenticação não encontrado'); // Ou algum tipo de alerta/erro
+      throw new Error('Token de autenticação não encontrado');
     }
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
