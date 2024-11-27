@@ -20,7 +20,7 @@ export class LoginComponent {
     this.authService.login(this.user, this.password).subscribe(
       response => {
         this.authService.saveToken(response.token);
-        this.router.navigate(['/clients'])
+        this.router.navigate(['/home'])
       },
       error => console.error('Erro ao logar:', error)
     );

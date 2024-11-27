@@ -1,0 +1,45 @@
+<div class="transactions-container">
+  <h2>Transações Ativas</h2>
+    <ul>
+      <li *ngFor="let transaction of transactions">
+        <div *ngIf="editTransactionId !== transaction.transactionId; else editTransactionForm">
+          ID: {{ transaction.transactionId }} - Origem: {{ transaction.originAccountId }} - Destino: {{ transaction.destinationAccountId }}
+          <p>Valor: R$ {{ transaction.amount }} - Tipo: {{ transaction.transactionType }} - Data: {{ transaction.date | date:'short' }}</p>
+          <button (click)="startEditTransaction(transaction)">Editar</button>
+          <button (click)="deleteTransaction(transaction.transactionId)">Excluir</button>
+        </div>
+        <ng-template #editTransactionForm>
+          <input [(ngModel)]="transaction.originAccountId" type="number" placeholder="ID Conta Origem" />
+          <input [(ngModel)]="transaction.destinationAccountId" type="number" placeholder="ID Conta Destino" />
+          <input [(ngModel)]="transaction.amount" type="number" step="0.01" placeholder="Valor" />
+          <input [(ngModel)]="transaction.transactionType" type="number" placeholder="Tipo de Transação" />
+          <input [(ngModel)]="transaction.date" type="datetime-local" placeholder="Data" />
+          <button (click)="saveEditTransaction(transaction)">Salvar</button>
+          <button (click)="cancelEditTransaction()">Cancelar</button>
+        </ng-template>
+      </li>
+    </ul>
+
+  <form (ngSubmit)="addTransaction()">
+    <h3>Adicionar Transação</h3>
+    <label for="transactionId">ID da Transação:</label>
+    <input [(ngModel)]="newTransaction.transactionId" id="transactionId" type="number" placeholder="ID da Transação" name="transactionId" required />
+
+    <label for="originAccountId">ID Conta Origem:</label>
+    <input [(ngModel)]="newTransaction.originAccountId" id="originAccountId" type="number" placeholder="ID Conta Origem" name="originAccountId" required />
+
+    <label for="destinationAccountId">ID Conta Destino:</label>
+    <input [(ngModel)]="newTransaction.destinationAccountId" id="destinationAccountId" type="number" placeholder="ID Conta Destino" name="destinationAccountId" required />
+
+    <label for="amount">Valor:</label>
+    <input [(ngModel)]="newTransaction.amount" id="amount" type="number" step="0.01" placeholder="Valor" name="amount" required />
+
+    <label for="transactionType">Tipo de Transação:</label>
+    <input [(ngModel)]="newTransaction.transactionType" id="transactionType" type="number" placeholder="Tipo de Transação" name="transactionType" required />
+
+    <label for="date">Data:</label>
+    <input [(ngModel)]="newTransaction.date" id="date" type="datetime-local" placeholder="Data" name="date" required />
+
+    <button type="submit">Adicionar Transação</button>
+  </form>
+</div>

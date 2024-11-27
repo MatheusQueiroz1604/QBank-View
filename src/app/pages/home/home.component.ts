@@ -10,8 +10,16 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   constructor(private router: Router) {}
 
-  navigateToLogin(): void {
-    console.log("Navegando para a página de login...");
-    this.router.navigate(['/login']);
+  navigateToClients(): void {
+    console.log("Navegando para a página de clientes...");
+    this.router.navigate(['/clients']);
+  }
+  navigateToAccounts(): void {
+    console.log("Navegando para a página de clientes...");
+    this.router.navigate(['/accounts']);
+  }
+  navigateToTransactions(): void {
+    console.log("Navegando para a página de transações...");
+    this.router.navigate(['/transactions']);
   }
 }

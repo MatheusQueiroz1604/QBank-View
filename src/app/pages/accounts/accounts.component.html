@@ -1,0 +1,46 @@
+<div class="accounts-container">
+  <h2>Contas Ativas</h2>
+    <ul>
+      <li *ngFor="let account of accounts">
+        <div *ngIf="editAccountId !== account.accountId; else editAccountForm">
+          ID: {{ account.accountId }} - Número: {{ account.accountNumber }} - Tipo: {{ account.accountType }} - Saldo: R$ {{ account.balance }} - ID do Cliente: {{ account.clientId }}
+          <button (click)="startEditAccount(account)">Editar</button>
+          <button (click)="deleteAccount(account.accountId)">Excluir</button>
+        </div>
+        <ng-template #editAccountForm>
+          <input [(ngModel)]="account.accountId" type="number" placeholder="ID da Conta" readonly />
+          <input [(ngModel)]="account.accountNumber" placeholder="Número da Conta" />
+          <input [(ngModel)]="account.accountType" placeholder="Tipo da Conta" />
+          <input [(ngModel)]="account.balance" type="number" placeholder="Saldo" />
+          <input [(ngModel)]="account.openingDate" type="date" placeholder="Data de Abertura" />
+          <input [(ngModel)]="account.clientId" type="number" placeholder="ID do Cliente" />
+          <button (click)="saveEditAccount(account)">Salvar</button>
+          <button (click)="cancelEditAccount()">Cancelar</button>
+        </ng-template>
+      </li>
+    </ul>
+
+  <form (ngSubmit)="addAccount()">
+    <h3>Adicionar Conta</h3>
+
+    <label for="accountId">ID da Conta:</label>
+    <input [(ngModel)]="newAccount.accountId" id="accountId" type="number" placeholder="ID da Conta" name="accountId" />
+
+    <label for="accountNumber">Número da Conta:</label>
+    <input [(ngModel)]="newAccount.accountNumber" id="accountNumber" placeholder="Número da Conta" name="accountNumber" required />
+
+    <label for="balance">Saldo:</label>
+    <input [(ngModel)]="newAccount.balance" id="balance" type="number" placeholder="Saldo" name="balance" required />
+
+    <label for="accountType">Tipo de Conta:</label>
+    <input [(ngModel)]="newAccount.accountType" id="accountType" placeholder="Tipo de Conta" name="accountType" required />
+
+    <label for="openingDate">Data de Abertura:</label>
+    <input [(ngModel)]="newAccount.openingDate" id="openingDate" type="date" placeholder="Data de Abertura" name="openingDate" required />
+
+    <label for="clientId">ID do Cliente:</label>
+    <input [(ngModel)]="newAccount.clientId" id="clientId" type="number" placeholder="ID do Cliente" name="clientId" required />
+
+    <button type="submit">Adicionar Conta</button>
+  </form>
+</div>
